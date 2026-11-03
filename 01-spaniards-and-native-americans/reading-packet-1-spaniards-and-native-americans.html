@@ -248,6 +248,78 @@ a:focus-visible,.btn:focus-visible,button:focus-visible{outline:3px solid color-
   .hero-num{display:none}
   .reading,.source,.visual,.finish{box-shadow:none}
 }
+
+/* ---- glass + depth layer ----
+   A fixed wash of the chapter's colors sits behind everything; panels are frosted
+   glass over it. Reading text stays on a near-solid surface for legibility. */
+:root{
+  --glass:color-mix(in srgb,var(--paper) 62%,transparent);
+  --glass-strong:color-mix(in srgb,var(--paper) 86%,transparent);
+  --glass-tint:color-mix(in srgb,var(--tint) 66%,transparent);
+  --glass-edge:color-mix(in srgb,#fff 70%,transparent);
+  --glass-hi:inset 0 1px 0 color-mix(in srgb,#fff 85%,transparent),inset 0 -1px 0 color-mix(in srgb,var(--ink) 5%,transparent);
+  --depth:0 1px 1px color-mix(in srgb,var(--ink) 5%,transparent),0 3px 6px -2px color-mix(in srgb,var(--ink) 8%,transparent),0 18px 40px -16px color-mix(in srgb,var(--ink) 30%,transparent);
+  --depth-up:0 2px 2px color-mix(in srgb,var(--ink) 6%,transparent),0 8px 14px -4px color-mix(in srgb,var(--ink) 12%,transparent),0 28px 56px -18px color-mix(in srgb,var(--ink) 38%,transparent);
+}
+body{background:var(--bg)}
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:
+    radial-gradient(42vmax 42vmax at 8% 6%,color-mix(in srgb,var(--maroon) 30%,transparent),transparent 70%),
+    radial-gradient(38vmax 38vmax at 96% 22%,color-mix(in srgb,var(--accent2) 26%,transparent),transparent 70%),
+    radial-gradient(46vmax 40vmax at 70% 104%,color-mix(in srgb,var(--maroon) 20%,transparent),transparent 70%),
+    radial-gradient(30vmax 30vmax at 20% 88%,color-mix(in srgb,var(--accent2) 16%,transparent),transparent 70%)}
+.glassy,.side,.bar,.meta,.reading,.source,.visual,.obj,.howto,.tbl,.ask,.cer,.checks,.finish,.pager a,.bigq{
+  border:1px solid var(--glass-edge)!important}
+.side{background:var(--glass);backdrop-filter:blur(18px) saturate(1.4);-webkit-backdrop-filter:blur(18px) saturate(1.4);border-width:0 1px 0 0!important;box-shadow:var(--glass-hi)}
+.bar{background:color-mix(in srgb,var(--bg) 55%,transparent);backdrop-filter:blur(16px) saturate(1.4);-webkit-backdrop-filter:blur(16px) saturate(1.4);border-width:0 0 1px!important;border-radius:0 0 14px 14px;padding-inline:14px;margin-inline:-14px}
+.meta,.obj,.howto,.checks,.finish{background:var(--glass);backdrop-filter:blur(14px) saturate(1.3);-webkit-backdrop-filter:blur(14px) saturate(1.3);box-shadow:var(--glass-hi),var(--depth)}
+.howto{border-style:solid!important}
+.bigq{background:var(--glass-tint);backdrop-filter:blur(14px) saturate(1.3);-webkit-backdrop-filter:blur(14px) saturate(1.3);box-shadow:var(--glass-hi),var(--depth)}
+.reading,.source,.visual{background:var(--glass-strong);backdrop-filter:blur(20px) saturate(1.2);-webkit-backdrop-filter:blur(20px) saturate(1.2);box-shadow:var(--glass-hi),var(--depth)}
+.tbl,.ask,.cer{background:var(--glass-tint);backdrop-filter:blur(14px) saturate(1.3);-webkit-backdrop-filter:blur(14px) saturate(1.3);box-shadow:var(--glass-hi),var(--depth)}
+.thead{border-bottom-color:var(--glass-edge)}
+.trow+.trow{border-top-color:var(--glass-edge)}
+/* answer boxes sit "pressed into" the glass */
+textarea,.meta input{background:color-mix(in srgb,#fff 82%,transparent);border-color:color-mix(in srgb,var(--line) 45%,transparent);box-shadow:inset 0 2px 4px color-mix(in srgb,var(--ink) 10%,transparent),inset 0 0 0 1px color-mix(in srgb,#fff 50%,transparent)}
+.meta input[readonly]{background:color-mix(in srgb,var(--rule) 45%,transparent)}
+textarea:focus,.meta input:focus{background:#fff;box-shadow:inset 0 2px 4px color-mix(in srgb,var(--ink) 8%,transparent),0 0 0 3px color-mix(in srgb,var(--accent2) 25%,transparent)}
+textarea.done{background:color-mix(in srgb,#fff 90%,transparent);box-shadow:inset 3px 0 0 var(--ok),inset 0 2px 4px color-mix(in srgb,var(--ink) 8%,transparent)}
+/* raised, tactile controls */
+.toc-part,.pager a,.btn{transition:transform .18s ease,box-shadow .18s ease,background-color .18s ease}
+.toc-part:hover{background:var(--glass-strong);border-color:var(--glass-edge);box-shadow:var(--glass-hi),var(--depth);transform:translateY(-1px)}
+.toc li.active>.toc-part{background:linear-gradient(180deg,color-mix(in srgb,var(--maroon) 88%,#fff),var(--maroon));box-shadow:inset 0 1px 0 color-mix(in srgb,#fff 35%,transparent),0 10px 22px -10px color-mix(in srgb,var(--maroon) 80%,transparent);transform:translateY(-1px)}
+.toc-part .cnt{background:var(--glass-strong);border-color:var(--glass-edge);box-shadow:var(--glass-hi)}
+.pager a{background:var(--glass);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:var(--glass-hi),var(--depth)}
+.pager a:hover{transform:translateY(-3px);box-shadow:var(--glass-hi),var(--depth-up)}
+.btn{background:var(--glass-strong);box-shadow:var(--glass-hi),0 2px 6px -2px color-mix(in srgb,var(--ink) 20%,transparent)}
+.btn:hover{transform:translateY(-1px)}
+.btn.primary{background:linear-gradient(180deg,color-mix(in srgb,var(--maroon) 85%,#fff),var(--maroon));box-shadow:inset 0 1px 0 color-mix(in srgb,#fff 35%,transparent),0 8px 18px -8px color-mix(in srgb,var(--maroon) 85%,transparent)}
+.btn:active{transform:translateY(1px)}
+.rtitle .rlabel{box-shadow:inset 0 1px 0 color-mix(in srgb,#fff 35%,transparent),0 3px 8px -3px color-mix(in srgb,var(--ink) 45%,transparent)}
+.visual .rtitle .rlabel{box-shadow:inset 0 0 0 1.5px var(--maroon)}
+.fill{background:linear-gradient(90deg,color-mix(in srgb,var(--accent2) 70%,#fff),var(--accent2));box-shadow:0 0 12px color-mix(in srgb,var(--accent2) 55%,transparent)}
+.track{box-shadow:inset 0 1px 2px color-mix(in srgb,var(--ink) 15%,transparent)}
+/* 3D title band: tilts toward the pointer, with a moving sheen */
+.hero-stage{perspective:1100px}
+.hero-band{transform-style:preserve-3d;transition:transform .5s cubic-bezier(.2,.7,.2,1);box-shadow:inset 0 1px 0 color-mix(in srgb,#fff 30%,transparent),0 2px 4px color-mix(in srgb,var(--ink) 10%,transparent),0 30px 60px -24px color-mix(in srgb,var(--maroon) 75%,transparent);transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg))}
+.hero-band::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:radial-gradient(600px circle at var(--mx,70%) var(--my,0%),color-mix(in srgb,#fff 22%,transparent),transparent 45%)}
+.hero-band>*{transform:translateZ(36px)}
+.hero-band .hero-num{transform:translateZ(14px);opacity:.2;text-shadow:0 1px 0 color-mix(in srgb,#fff 40%,transparent),0 18px 30px color-mix(in srgb,#000 35%,transparent)}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+  :root{--glass:color-mix(in srgb,var(--paper) 94%,transparent);--glass-tint:var(--tint)}
+}
+@media (prefers-reduced-motion:reduce){
+  .hero-band{transform:none!important;transition:none}
+  .toc-part,.pager a,.btn{transition:none}
+  .pager a:hover,.toc-part:hover,.btn:hover{transform:none}
+}
+@media (max-width:900px){.side{border-width:0 0 1px!important}.bar{margin-inline:0;border-radius:0}}
+@media print{
+  body::before{display:none}
+  .side,.bar,.meta,.reading,.source,.visual,.obj,.howto,.tbl,.ask,.cer,.checks,.finish,.bigq{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;background:#fff!important;box-shadow:none!important;border-color:#ccc!important}
+  .hero-band{transform:none!important;box-shadow:none}
+  .hero-band::after{display:none}
+}
 </style>
 </head>
 <body>
@@ -265,9 +337,9 @@ a:focus-visible,.btn:focus-visible,button:focus-visible{outline:3px solid color-
 
 <section class="page" id="part-1" aria-label="Part 1">
 <header class="hero">
-  <div class="hero-band"><div class="eyebrow">INTERACTIVE READING 1</div>
+  <div class="hero-stage"><div class="hero-band"><div class="eyebrow">INTERACTIVE READING 1</div>
   <h1>Spaniards and Native Americans</h1>
-  <p class="sub">Prehistory–1521 | Two Worlds Meet, a New People Begins</p><span class="hero-num" aria-hidden="true">1</span></div>
+  <p class="sub">Prehistory–1521 | Two Worlds Meet, a New People Begins</p><span class="hero-num" aria-hidden="true">1</span></div></div>
   <div class="meta">
     <label>FIRST NAME *<input id="f_first" type="text" autocomplete="given-name"></label>
     <label>LAST NAME *<input id="f_last" type="text" autocomplete="family-name"></label>
@@ -387,6 +459,14 @@ a:focus-visible,.btn:focus-visible,button:focus-visible{outline:3px solid color-
   window.rpCount=count;
   var band=document.querySelector('.hero-band'),pic=document.querySelector('figure img');
   if(band&&pic)band.style.setProperty('--hero-img','url("'+pic.src+'")');
+  if(band&&window.matchMedia&&matchMedia('(hover:hover) and (pointer:fine)').matches&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
+    band.addEventListener('pointermove',function(e){
+      var r=band.getBoundingClientRect(),x=(e.clientX-r.left)/r.width,y=(e.clientY-r.top)/r.height;
+      band.style.setProperty('--ry',((x-.5)*7).toFixed(2)+'deg');band.style.setProperty('--rx',((.5-y)*6).toFixed(2)+'deg');
+      band.style.setProperty('--mx',(x*100).toFixed(1)+'%');band.style.setProperty('--my',(y*100).toFixed(1)+'%');
+    });
+    band.addEventListener('pointerleave',function(){['--rx','--ry','--mx','--my'].forEach(function(k){band.style.removeProperty(k)})});
+  }
   document.addEventListener('input',count);
   route();
   setTimeout(count,0);
